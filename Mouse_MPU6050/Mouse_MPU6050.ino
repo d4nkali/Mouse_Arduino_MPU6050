@@ -27,6 +27,9 @@
 
   const int botao_esq = 6; // Define o pino 6 como do botão da esquerda
   const int botao_dir = 7; // Define o pino 7 como do botão da direita
+  
+  bool esq_press = false; // Variavel de leitura de pressão do botão esquerdo
+  bool dir_press = false;  // Variavel de leitura de pressão do botão direito
 
 void setup() {
 
@@ -67,23 +70,37 @@ void loop() {
 
   delay(10); // Aguarda ms para leitura do sensor e do mouse
 
-  if (state_esq == LOW) { // Se botão do esquerdo do mouse for precionado
+  // Botão Esquerdo
 
-    Mouse.press(MOUSE_LEFT); // Emula o acionamento do botão
-    delay(100);  // Aguarda
-    Mouse.release(MOUSE_LEFT); // Solta o botão
-    delay(200); // Aguarda
+    if (state_esq == LOW && !esq_press) { // Se o botão ficar precionado, então:
 
-  }
+      Mouse.press(MOUSE_LEFT); // Emula o acionamento do botão esquerdo
+      esq_press = true; // Define a variavel de pressão como verdadeiro
 
-  else if (state_dir == LOW) {  // Se botão da direita do mouse for precionado
+    } 
 
-    Mouse.press(MOUSE_RIGHT); // Emula o acionamento do botão
-    delay(100); // Aguarda
-    Mouse.release(MOUSE_RIGHT); // Solta o botão
-    delay(200); // Aguarda
+    else if (state_esq == HIGH && esq_press) { // Se soltar, então:
 
-  }
+      Mouse.release(MOUSE_LEFT); // Emula o desacionamento do botão esquerdo
+      esq_press = false; // Define a variavel de pressão como falso
+
+    }
+
+  // Botão direito
+
+    if (state_dir == LOW && !dir_press) {  // Se o botão ficar precionado, então:
+
+      Mouse.press(MOUSE_RIGHT); // Emula o acionamento do botão direito
+      dir_press = true; // Define a variavel de pressão como verdadeiro
+
+    } 
+
+    else if (state_dir == HIGH && dir_press) {  // Se soltar, então:
+
+      Mouse.release(MOUSE_RIGHT); // Emula o desacionamento do botão direito
+      dir_press = false; // Define a variavel de pressão como falso
+
+    }
 
 }
 
