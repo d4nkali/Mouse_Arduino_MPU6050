@@ -23,6 +23,7 @@
   int prevX, prevY; // Variavel da leitura apos o filtro
 
   const float valor_filtro = 0.95; // Filtro para suavizar as leituras
+  const int veloc_mouse = 2; // Velocidade do mouse
 
   const int botao_esq = 6; // Define o pino 6 como do botão da esquerda
   const int botao_dir = 7; // Define o pino 7 como do botão da direita
@@ -44,8 +45,8 @@ void loop() {
 
   // Cria variaveis mapeadas como a variavel antiga e ate os limites para o mouse
 
-    int deltaX = map(accx, -17000, 17000, -10, 10);
-    int deltaY = map(accy, -17000, 17000, -10, 10);
+    int deltaX = map(accx, -20000, 20000, -20, 20);
+    int deltaY = map(accy, -20000, 20000, -20, 20);
 
   // Cria a variavel final apos os calculos e filtros
 
@@ -57,7 +58,7 @@ void loop() {
     int state_esq = digitalRead(botao_esq);
     int state_dir = digitalRead(botao_dir); 
   
-  Mouse.move(newX, newY, 0); // Emula o movimento do mouse pela variavel ja com os filtros e calculos
+  Mouse.move(veloc_mouse * newX, veloc_mouse * newY, 0); // Emula o movimento do mouse pela variavel ja com os filtros e calculos
 
   // Define a variavel final para ser igual a antiga para novos movimentos
 
